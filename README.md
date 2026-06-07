@@ -2,6 +2,10 @@
 
 **Free, open-source, native macOS app for domain reconnaissance.** ReconKit replaces the dozen tools and browser tabs you'd normally juggle — `dig`, `whois`, `openssl`, `nmap`, crt.sh, securityheaders, Have I Been Pwned, URLhaus, VirusTotal — with a single scan that compiles DNS, subdomains, SSL, HTTP, ports, WHOIS, and reputation into one ranked report you can export to PDF. Every probe runs locally on your Mac.
 
+<p align="center">
+  <img src="assets/overview.png" alt="ReconKit report — security score, grade, and prioritized action plan" width="760">
+</p>
+
 - **Website:** https://reconkit.fromthescope.com
 - **Docs:** https://reconkit.fromthescope.com/docs.html
 - **Download:** [latest release](https://github.com/melxusgid/reconkit/releases/latest)
@@ -22,6 +26,25 @@
 | **Reputation** | Have I Been Pwned and URLhaus for free; add your own VirusTotal key for 90+ vendors. |
 
 Findings are graded **Pass / Info / Warning / Issue** and distilled into a 0–100 security score (letter grade A–F).
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/http.png" alt="HTTP — missing security headers"><br><sub><b>HTTP</b> — security headers, flagged worst-first</sub></td>
+    <td width="50%"><img src="assets/dns.png" alt="DNS records and hygiene"><br><sub><b>DNS</b> — records plus SPF/DMARC/DNSSEC/CAA</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/ssl.png" alt="SSL certificate details"><br><sub><b>SSL</b> — certificate, chain, negotiated TLS</sub></td>
+    <td width="50%"><img src="assets/subdomains.png" alt="Subdomains from CT logs"><br><sub><b>Subdomains</b> — from Certificate Transparency logs</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/reputation.png" alt="Reputation checks"><br><sub><b>Reputation</b> — HIBP, URLhaus, VirusTotal</sub></td>
+    <td width="50%"></td>
+  </tr>
+</table>
+
+> Screenshots show a real scan of <code>example.com</code> — the same results the built-in demo reproduces.
 
 ## Install
 
