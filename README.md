@@ -27,7 +27,7 @@ Findings are graded **Pass / Info / Warning / Issue** and distilled into a 0–1
 
 1. Download `ReconKit.dmg` from the [latest release](https://github.com/melxusgid/reconkit/releases/latest) (~2.2 MB).
 2. Open the DMG and drag **ReconKit** into `/Applications`.
-3. **First launch:** v1.0.0 is signed but not yet notarized, so macOS may block it. Right-click the app → **Open** → **Open** to approve it once.
+3. **Launch it** — just double-click. ReconKit is signed with an Apple Developer ID and notarized by Apple, so it opens with no Gatekeeper warning.
 
 Requires **macOS 13 (Ventura)** or later, Apple Silicon or Intel.
 
