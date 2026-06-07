@@ -102,6 +102,7 @@ struct SidebarView: View {
 
 struct BrandHeader: View {
     var onSettings: () -> Void = {}
+    @Environment(\.openWindow) private var openWindow
     var body: some View {
         HStack(spacing: 10) {
             ZStack {
@@ -122,6 +123,15 @@ struct BrandHeader: View {
                     .foregroundStyle(Theme.accentSoft)
             }
             Spacer()
+            Button(action: { openWindow(id: "docs") }) {
+                Image(systemName: "questionmark.circle")
+                    .font(.system(size: 13))
+                    .foregroundStyle(Theme.textTertiary)
+                    .frame(width: 22, height: 22)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .help("Help & Docs")
             Button(action: onSettings) {
                 Image(systemName: "gearshape.fill")
                     .font(.system(size: 13))

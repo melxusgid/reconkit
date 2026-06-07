@@ -18,25 +18,22 @@ struct ReconKitApp: App {
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 1080, height: 720)
         .commands {
-            // MARK: File
-            CommandGroup(after: .newItem) {
+            // MARK: File — New Scan replaces the default "New Window" (no \u2318N window conflict)
+            CommandGroup(replacing: .newItem) {
                 Button("New Scan") {
                     coordinator.requestScanFocus = true
                 }
-                .keyboardShortcut("n", modifiers: .command)
+                .keyboardShortcut("n", modifiers: [.command, .shift])
 
                 Button("Load Demo Scan") {
                     coordinator.loadSample()
                 }
                 .keyboardShortcut("d", modifiers: [.command, .shift])
-
-                Divider()
             }
 
             // MARK: View
             CommandMenu("View") {
                 Button("Toggle Sidebar") {
-                    // SwiftUI sidebar toggle — handled automatically
                     NSApp.keyWindow?.tryToggleSidebar()
                 }
                 .keyboardShortcut("s", modifiers: [.command, .option])
@@ -44,18 +41,34 @@ struct ReconKitApp: App {
 
             // MARK: Help
             CommandMenu("Help") {
+                OpenDocsButton()
+                Divider()
                 Link("Privacy Policy", destination: URL(string: "https://reconkit.fromthescope.com/privacy")!)
-                    .keyboardShortcut("/", modifiers: [.command, .shift])
                 Link("Terms of Use", destination: URL(string: "https://reconkit.fromthescope.com/terms")!)
                 Link("ReconKit Website", destination: URL(string: "https://reconkit.fromthescope.com")!)
             }
         }
-        .windowStyle(.hiddenTitleBar)
+
+        // MARK: Docs window — loads the live documentation page
+        Window("ReconKit Docs", id: "docs") {
+            DocsWebView(url: URL(string: "https://reconkit.fromthescope.com/docs")!)
+                .frame(minWidth: 720, minHeight: 600)
+                .ignoresSafeArea()
+        }
+        .defaultSize(width: 920, height: 760)
 
         Settings {
             SettingsView()
                 .environmentObject(coordinator)
         }
+    }
+}
+
+/// Help-menu item that opens the in-app documentation window.
+struct OpenDocsButton: View {
+    @Environment(\.openWindow) private var openWindow
+    var body: some View {
+        Button("ReconKit Docs") { openWindow(id: "docs") }
     }
 }
 
