@@ -15,16 +15,27 @@ struct ContentView: View {
     @State private var domainInput = ""
     @AppStorage("hasCompletedOnboarding") private var hasOnboarded = false
     @State private var showOnboarding = false
+    @StateObject private var updater = UpdateChecker()
+    @AppStorage("ignoredUpdateVersion") private var ignoredUpdateVersion = ""
 
     var body: some View {
-        HStack(spacing: 0) {
-            SidebarView(coordinator: coordinator)
-                .frame(width: 248)
-                .background(Theme.bgSidebar)
-            Rectangle().fill(Theme.stroke).frame(width: 1)
-            DetailView(coordinator: coordinator, domainInput: $domainInput)
-                .frame(maxWidth: .infinity)
-                .background(AppBackground())
+        VStack(spacing: 0) {
+            if let v = updater.latestVersion, v != ignoredUpdateVersion {
+                UpdateBanner(
+                    version: v,
+                    onDownload: { if let url = updater.releaseURL { NSWorkspace.shared.open(url) } },
+                    onDismiss: { ignoredUpdateVersion = v }
+                )
+            }
+            HStack(spacing: 0) {
+                SidebarView(coordinator: coordinator)
+                    .frame(width: 248)
+                    .background(Theme.bgSidebar)
+                Rectangle().fill(Theme.stroke).frame(width: 1)
+                DetailView(coordinator: coordinator, domainInput: $domainInput)
+                    .frame(maxWidth: .infinity)
+                    .background(AppBackground())
+            }
         }
         .preferredColorScheme(.dark)
         .tint(Theme.accent)
@@ -43,6 +54,7 @@ struct ContentView: View {
             )
         }
         .onAppear { if !hasOnboarded { showOnboarding = true } }
+        .task { await updater.check() }
     }
 
     private func finishOnboarding() {
