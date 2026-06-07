@@ -48,7 +48,7 @@ Findings are graded **Pass / Info / Warning / Issue** and distilled into a 0–1
 
 ## Install
 
-1. Download `ReconKit.dmg` from the [latest release](https://github.com/melxusgid/reconkit/releases/latest) (~2.2 MB).
+1. Download `ReconKit.dmg` from the [latest release](https://github.com/melxusgid/reconkit/releases/latest) (~2.1 MB).
 2. Open the DMG and drag **ReconKit** into `/Applications`.
 3. **Launch it** — just double-click. ReconKit is signed with an Apple Developer ID and notarized by Apple, so it opens with no Gatekeeper warning.
 
