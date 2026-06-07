@@ -13,6 +13,8 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var coordinator: ScanCoordinator
     @State private var domainInput = ""
+    @AppStorage("hasCompletedOnboarding") private var hasOnboarded = false
+    @State private var showOnboarding = false
 
     var body: some View {
         HStack(spacing: 0) {
@@ -34,6 +36,18 @@ struct ContentView: View {
         .sheet(isPresented: $coordinator.showSettings) {
             SettingsView()
         }
+        .sheet(isPresented: $showOnboarding) {
+            OnboardingView(
+                onLoadDemo: { coordinator.loadSample(); finishOnboarding() },
+                onDismiss: { finishOnboarding() }
+            )
+        }
+        .onAppear { if !hasOnboarded { showOnboarding = true } }
+    }
+
+    private func finishOnboarding() {
+        hasOnboarded = true
+        showOnboarding = false
     }
 }
 
